@@ -37,6 +37,13 @@ export class PortfolioRegistry {
   }
 
   static getDefaultVersion(): PortfolioVersion {
+    // Check localStorage for published version (set by admin panel)
+    if (typeof window !== 'undefined') {
+      const publishedVersion = localStorage.getItem('portfolio-published-version');
+      if (publishedVersion && this.portfolios.has(publishedVersion)) {
+        return publishedVersion;
+      }
+    }
     return this.defaultVersion;
   }
 }

@@ -14,6 +14,10 @@ A responsive personal portfolio website built with React, Vite, and deployed to 
 - Contact form
 - Mobile-friendly hamburger menu
 - **Multi-version portfolio support** (switch via URL parameter)
+- **Admin Panel** for editing portfolio content (profile, skills, projects, contact)
+- **Version Management** (create, switch, publish versions)
+- **Live Preview** before publishing changes
+- **Seasonal themes** with light/dark mode support
 
 ## Tech Stack
 
@@ -72,6 +76,8 @@ http://localhost:5173/?version=demo
 http://localhost:5173/?version=hengtai25
 ```
 
+Or use the **Admin Panel** to manage versions (see [Admin Panel](#admin-panel) section).
+
 ### Creating a New Version
 
 1. Create a new folder under `src/features/portfolio/data/versions/`:
@@ -92,6 +98,44 @@ http://localhost:5173/?version=hengtai25
    ```
 
 3. Access via `?version=your-version`
+
+## Admin Panel
+
+The admin panel provides a visual interface for managing your portfolio content.
+
+### Accessing the Admin Panel
+
+Navigate to `/admin` in your browser:
+```
+http://localhost:5173/admin
+```
+
+### Admin Features
+
+| Section | Description |
+|---------|-------------|
+| **Dashboard** | Overview with quick links to all editors |
+| **Profile Editor** | Edit name, title, greeting, bio, photo, and stats |
+| **Skills Editor** | Add/edit/remove skill categories and individual skills |
+| **Projects Editor** | Manage projects with drag-and-drop reordering |
+| **Contact Editor** | Edit email, location, and social links |
+| **Version Manager** | Create, switch, and publish portfolio versions |
+
+### Workflow
+
+1. **Edit Content**: Make changes in any editor section
+2. **Save Changes**: Click "Save Changes" to persist your edits
+3. **Preview**: Use "Preview" to see changes before publishing
+4. **Publish**: Go to Versions and click "Publish" to make changes live
+
+### Data Persistence
+
+Currently, all changes are saved to **localStorage**. This means:
+- Changes persist across browser sessions on the same device
+- Data is not synced across devices
+- Clearing browser data will reset to default portfolio
+
+> **Note**: Phase 3 will add Supabase backend for cloud persistence and multi-tenancy.
 
 ## Customization
 
@@ -206,32 +250,47 @@ portfolio/
 │   │   └── models/
 │   │       └── Entity.ts              # Base entity class
 │   ├── features/
-│   │   └── portfolio/
-│   │       ├── models/                # Domain models (OOP)
-│   │       │   ├── Profile.ts
-│   │       │   ├── Skill.ts
-│   │       │   ├── SkillCategory.ts
-│   │       │   ├── Project.ts
-│   │       │   ├── SocialLink.ts
-│   │       │   ├── ContactInfo.ts
-│   │       │   ├── Portfolio.ts
-│   │       │   └── index.ts
-│   │       ├── services/
-│   │       │   ├── PortfolioService.ts  # Facade service (singleton)
-│   │       │   ├── ThemeManager.ts      # Theme/season management
-│   │       │   └── VersionManager.ts    # Version/data management
+│   │   ├── portfolio/
+│   │   │   ├── models/                # Domain models (OOP)
+│   │   │   │   ├── Profile.ts
+│   │   │   │   ├── Skill.ts
+│   │   │   │   ├── SkillCategory.ts
+│   │   │   │   ├── Project.ts
+│   │   │   │   ├── SocialLink.ts
+│   │   │   │   ├── ContactInfo.ts
+│   │   │   │   ├── Portfolio.ts
+│   │   │   │   └── index.ts
+│   │   │   ├── services/
+│   │   │   │   ├── PortfolioService.ts  # Facade service (singleton)
+│   │   │   │   ├── ThemeManager.ts      # Theme/season management
+│   │   │   │   └── VersionManager.ts    # Version/data management
+│   │   │   ├── hooks/
+│   │   │   │   └── useTheme.ts          # React hook for theme
+│   │   │   ├── data/
+│   │   │   │   ├── PortfolioRegistry.ts # Version management
+│   │   │   │   ├── index.ts
+│   │   │   │   └── versions/
+│   │   │   │       ├── hengtai25/       # Production data
+│   │   │   │       │   ├── assets/      # Project preview images
+│   │   │   │       │   └── *.ts         # Data files
+│   │   │   │       └── demo/            # Demo/test data
+│   │   │   └── __tests__/
+│   │   │       └── PortfolioService.test.ts
+│   │   └── admin/                       # Admin panel feature
+│   │       ├── components/
+│   │       │   ├── AdminLayout.tsx      # Admin layout with sidebar
+│   │       │   ├── Dashboard.tsx        # Admin dashboard
+│   │       │   ├── ProfileEditor.tsx    # Profile editing
+│   │       │   ├── SkillsEditor.tsx     # Skills editing
+│   │       │   ├── ProjectsEditor.tsx   # Projects editing
+│   │       │   ├── ContactEditor.tsx    # Contact editing
+│   │       │   └── VersionManager.tsx   # Version management
 │   │       ├── hooks/
-│   │       │   └── useTheme.ts          # React hook for theme
-│   │       ├── data/
-│   │       │   ├── PortfolioRegistry.ts # Version management
-│   │       │   ├── index.ts
-│   │       │   └── versions/
-│   │       │       ├── hengtai25/       # Production data
-│   │       │       │   ├── assets/      # Project preview images
-│   │       │       │   └── *.ts         # Data files
-│   │       │       └── demo/            # Demo/test data
+│   │       │   └── usePortfolioEditor.ts # Editor state hook
+│   │       ├── services/
+│   │       │   └── PortfolioEditorService.ts # Mutation service
 │   │       └── __tests__/
-│   │           └── PortfolioService.test.ts
+│   │           └── PortfolioEditorService.test.ts
 │   ├── shared/
 │   │   └── animations/
 │   │       └── presets.ts             # Framer Motion presets
@@ -267,12 +326,13 @@ portfolio/
 This project uses a **Feature-Based + Clean Architecture** pattern:
 
 - **Core**: Shared infrastructure (base classes, types)
-- **Features**: Bounded contexts (portfolio, auth, admin)
+- **Features**: Bounded contexts (portfolio, admin)
 - **Shared**: Reusable utilities and animations
 - **Components**: UI components that consume data from services
 
 ### Data Flow
 
+**Public Portfolio (Read-only)**
 ```
 PortfolioRegistry (registers versions)
        ↓
@@ -283,6 +343,19 @@ PortfolioService (facade singleton)
 React Hooks (useTheme)
        ↓
 Components (Hero, About, Skills, Projects, Contact)
+```
+
+**Admin Panel (Read/Write)**
+```
+PortfolioEditorService (mutation singleton)
+├── Loads from PortfolioRegistry
+├── Manages draft state
+├── Persists to localStorage
+└── Publishes to PortfolioRegistry
+       ↓
+usePortfolioEditor (React hook)
+       ↓
+Editor Components (ProfileEditor, SkillsEditor, etc.)
 ```
 
 ## License

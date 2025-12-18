@@ -47,6 +47,7 @@ export function VersionManager() {
   const handlePublish = (version: string) => {
     if (confirm(`Publish "${version}" as the default portfolio version?`)) {
       publishVersion(version)
+      alert('Published successfully! Please refresh the Live Site to see your changes.')
     }
   }
 
@@ -180,12 +181,12 @@ export function VersionManager() {
                       Edit
                     </button>
                   )}
-                  {version !== publishedVersion && (
+                  {(version !== publishedVersion || (version === currentVersion && hasUnsavedChanges)) && (
                     <button
                       className="btn btn-outline btn-sm"
                       onClick={() => handlePublish(version)}
                     >
-                      Publish
+                      {version === publishedVersion ? 'Re-publish' : 'Publish'}
                     </button>
                   )}
                   <a

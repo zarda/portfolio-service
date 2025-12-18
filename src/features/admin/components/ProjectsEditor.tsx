@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { usePortfolioEditor } from '../hooks/usePortfolioEditor'
-import { ProjectProps } from '@/features/portfolio/models'
 
 interface ProjectFormData {
   title: string

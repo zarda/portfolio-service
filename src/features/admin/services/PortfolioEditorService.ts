@@ -10,7 +10,6 @@ import {
   Project,
   ProjectProps,
   ContactInfo,
-  ContactField,
   SocialLink,
   SocialPlatform,
 } from '@/features/portfolio/models'
@@ -446,6 +445,14 @@ export class PortfolioEditorService {
   }
 
   publishVersion(version: PortfolioVersion): void {
+    // If publishing the current version with unsaved changes, save them first
+    if (version === this.currentVersion && this.isDirty && this.draft) {
+      const portfolio = this.draftToPortfolio(this.draft, this.currentVersion)
+      PortfolioRegistry.register(this.currentVersion, portfolio)
+      this.isDirty = false
+      this.persistVersionToStorage(this.currentVersion)
+      this.persistDraftToStorage()
+    }
     PortfolioRegistry.setDefault(version)
     this.persistPublishedVersion(version)
     this.notify()
