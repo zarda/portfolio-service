@@ -8,7 +8,7 @@ import Projects from '@/components/Projects'
 import Resume from '@/components/Resume'
 import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
-import { useTheme } from '@/features/portfolio/hooks/useTheme'
+import { useTheme } from '@/features/theme'
 import { PortfolioService } from '@/features/portfolio/services/PortfolioService'
 
 export default function PortfolioPage() {

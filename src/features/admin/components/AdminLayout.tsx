@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { useTheme } from '@/features/portfolio/hooks/useTheme'
+import { useTheme } from '@/features/theme'
 import { EditorInitializer } from './EditorInitializer'
 
 interface AdminLayoutProps {
@@ -19,6 +19,7 @@ const navItems: NavItem[] = [
   { path: '/admin/skills', label: 'Skills', icon: '⚡' },
   { path: '/admin/projects', label: 'Projects', icon: '💼' },
   { path: '/admin/contact', label: 'Contact', icon: '📧' },
+  { path: '/admin/theme', label: 'Theme', icon: '🎨' },
   { path: '/admin/versions', label: 'Versions', icon: '🔄' },
 ]
 

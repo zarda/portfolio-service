@@ -76,205 +76,26 @@
   --radius-xl: 24px;
   --radius-full: 9999px;
 
-  /* Glass effect */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.2);
+  /* Glass effect - uses theme background color */
   --glass-blur: 10px;
 }
 
-/* Dark Mode */
+/* Dark Mode - Only non-color overrides (shadows, glass effects)
+   Colors are now applied via ThemeService inline styles */
 .dark-mode {
-  /* Primary Colors */
-  --color-primary: #818cf8;
-  --color-primary-light: #a5b4fc;
-  --color-primary-dark: #6366f1;
-  --color-primary-rgb: 129, 140, 248;
-
-  /* Accent Colors */
-  --color-accent: #f472b6;
-  --color-accent-light: #f9a8d4;
-  --color-accent-dark: #ec4899;
-
-  /* Secondary Colors */
-  --color-secondary: #94a3b8;
-  --color-secondary-light: #cbd5e1;
-
-  /* Background Colors */
-  --color-background: #0f172a;
-  --color-background-alt: #1e293b;
-  --color-background-elevated: #334155;
-
-  /* Text Colors */
-  --color-text: #f1f5f9;
-  --color-text-light: #94a3b8;
-  --color-text-muted: #64748b;
-
-  /* Border Color */
-  --color-border: #334155;
-
-  /* Shadows */
+  /* Shadows - darker for dark mode */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
   --shadow-glow: 0 0 25px rgba(var(--color-primary-rgb), 0.4);
   --shadow-glow-lg: 0 0 50px rgba(var(--color-primary-rgb), 0.5);
-
-  /* Gradients - slightly adjusted for dark mode */
-  --gradient-glow: radial-gradient(circle at center, rgba(var(--color-primary-rgb), 0.2) 0%, transparent 70%);
-
-  /* Glass effect for dark mode */
-  --glass-bg: rgba(30, 41, 59, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 /* ==========================================
    SEASONAL THEMES
+   Now handled by ThemeService via inline CSS variables
    ========================================== */
-
-/* 🌸 SPRING THEME - Cherry blossoms, fresh greens */
-.theme-spring {
-  --color-primary: #ec4899;
-  --color-primary-light: #f472b6;
-  --color-primary-dark: #db2777;
-  --color-primary-rgb: 236, 72, 153;
-
-  --color-accent: #22c55e;
-  --color-accent-light: #4ade80;
-  --color-accent-dark: #16a34a;
-
-  --color-secondary: #a78bfa;
-  --color-secondary-light: #c4b5fd;
-
-  --gradient-primary: linear-gradient(135deg, #ec4899 0%, #22c55e 100%);
-  --gradient-text: linear-gradient(135deg, #ec4899 0%, #a78bfa 100%);
-}
-
-.theme-spring.dark-mode {
-  --color-primary: #f472b6;
-  --color-primary-light: #f9a8d4;
-  --color-primary-dark: #ec4899;
-  --color-primary-rgb: 244, 114, 182;
-
-  --color-accent: #4ade80;
-  --color-accent-light: #86efac;
-  --color-accent-dark: #22c55e;
-
-  --color-background: #1a0f1e;
-  --color-background-alt: #2d1f33;
-  --color-background-elevated: #3d2a45;
-
-  --gradient-primary: linear-gradient(135deg, #f472b6 0%, #4ade80 100%);
-  --gradient-text: linear-gradient(135deg, #f472b6 0%, #c4b5fd 100%);
-}
-
-/* ☀️ SUMMER THEME - Coral, teal, sunny vibes */
-.theme-summer {
-  --color-primary: #f97316;
-  --color-primary-light: #fb923c;
-  --color-primary-dark: #ea580c;
-  --color-primary-rgb: 249, 115, 22;
-
-  --color-accent: #06b6d4;
-  --color-accent-light: #22d3ee;
-  --color-accent-dark: #0891b2;
-
-  --color-secondary: #eab308;
-  --color-secondary-light: #facc15;
-
-  --gradient-primary: linear-gradient(135deg, #f97316 0%, #06b6d4 100%);
-  --gradient-text: linear-gradient(135deg, #f97316 0%, #eab308 100%);
-}
-
-.theme-summer.dark-mode {
-  --color-primary: #fb923c;
-  --color-primary-light: #fdba74;
-  --color-primary-dark: #f97316;
-  --color-primary-rgb: 251, 146, 60;
-
-  --color-accent: #22d3ee;
-  --color-accent-light: #67e8f9;
-  --color-accent-dark: #06b6d4;
-
-  --color-background: #0c1929;
-  --color-background-alt: #1a2d3d;
-  --color-background-elevated: #2a3d4d;
-
-  --gradient-primary: linear-gradient(135deg, #fb923c 0%, #22d3ee 100%);
-  --gradient-text: linear-gradient(135deg, #fb923c 0%, #facc15 100%);
-}
-
-/* 🍂 AUTUMN THEME - Amber, rust, warm browns */
-.theme-autumn {
-  --color-primary: #d97706;
-  --color-primary-light: #f59e0b;
-  --color-primary-dark: #b45309;
-  --color-primary-rgb: 217, 119, 6;
-
-  --color-accent: #dc2626;
-  --color-accent-light: #ef4444;
-  --color-accent-dark: #b91c1c;
-
-  --color-secondary: #78350f;
-  --color-secondary-light: #92400e;
-
-  --gradient-primary: linear-gradient(135deg, #d97706 0%, #dc2626 100%);
-  --gradient-text: linear-gradient(135deg, #f59e0b 0%, #dc2626 100%);
-}
-
-.theme-autumn.dark-mode {
-  --color-primary: #f59e0b;
-  --color-primary-light: #fbbf24;
-  --color-primary-dark: #d97706;
-  --color-primary-rgb: 245, 158, 11;
-
-  --color-accent: #ef4444;
-  --color-accent-light: #f87171;
-  --color-accent-dark: #dc2626;
-
-  --color-background: #1c1412;
-  --color-background-alt: #2d2420;
-  --color-background-elevated: #3d342f;
-
-  --gradient-primary: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
-  --gradient-text: linear-gradient(135deg, #fbbf24 0%, #f87171 100%);
-}
-
-/* ❄️ WINTER THEME - Ice blue, silver, cool tones */
-.theme-winter {
-  --color-primary: #3b82f6;
-  --color-primary-light: #60a5fa;
-  --color-primary-dark: #2563eb;
-  --color-primary-rgb: 59, 130, 246;
-
-  --color-accent: #8b5cf6;
-  --color-accent-light: #a78bfa;
-  --color-accent-dark: #7c3aed;
-
-  --color-secondary: #64748b;
-  --color-secondary-light: #94a3b8;
-
-  --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  --gradient-text: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
-}
-
-.theme-winter.dark-mode {
-  --color-primary: #60a5fa;
-  --color-primary-light: #93c5fd;
-  --color-primary-dark: #3b82f6;
-  --color-primary-rgb: 96, 165, 250;
-
-  --color-accent: #a78bfa;
-  --color-accent-light: #c4b5fd;
-  --color-accent-dark: #8b5cf6;
-
-  --color-background: #0c1222;
-  --color-background-alt: #1a2535;
-  --color-background-elevated: #2a3545;
-
-  --gradient-primary: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-  --gradient-text: linear-gradient(135deg, #60a5fa 0%, #22d3ee 100%);
-}
 
 /* Reset */
 *,
@@ -290,9 +111,9 @@ html {
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
+  font-family: var(--font-body, 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  font-size: var(--font-size-base, 16px);
+  line-height: var(--line-height, 1.6);
   color: var(--color-text);
   background-color: var(--color-background);
 }
@@ -324,6 +145,12 @@ button {
   font-family: inherit;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading, inherit);
+  font-weight: var(--font-weight-heading, 700);
+  line-height: var(--line-height-heading, 1.1);
+}
+
 /* ==========================================
    COMMON UTILITY CLASSES
    ========================================== */
@@ -350,8 +177,10 @@ button {
 }
 
 .section-title {
+  font-family: var(--font-heading, inherit);
   font-size: 2.25rem;
-  font-weight: 700;
+  font-weight: var(--font-weight-heading, 700);
+  line-height: var(--line-height-heading, 1.1);
   text-align: center;
   margin-bottom: var(--space-2xl);
   position: relative;
@@ -671,10 +500,10 @@ button {
 
 /* Glassmorphism */
 .glass {
-  background: var(--glass-bg);
+  background: rgba(var(--color-background-rgb), 0.8);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-border);
 }
 
 /* Gradient Border Effect */
@@ -991,10 +820,10 @@ button {
 }
 
 .card-glass {
-  background: var(--glass-bg);
+  background: rgba(var(--color-background-rgb), 0.8);
   backdrop-filter: blur(var(--glass-blur));
   -webkit-backdrop-filter: blur(var(--glass-blur));
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--color-border);
 }
 
 /* ==========================================
@@ -1205,20 +1034,16 @@ button {
   left: 0;
   width: 100%;
   height: var(--header-height);
-  background: var(--glass-bg);
+  background: rgba(var(--color-background-rgb), 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   z-index: 1000;
-  border-bottom: 1px solid var(--glass-border);
+  border-bottom: 1px solid var(--color-border);
   transition: var(--transition);
 }
 
 .header--scrolled {
   box-shadow: var(--shadow-md);
-}
-
-.dark-mode .header {
-  background: rgba(15, 23, 42, 0.85);
 }
 
 /* .header__container replaced with .container .flex-between .h-full utilities */
@@ -1429,9 +1254,10 @@ button {
 
 /* .hero__title uses .mb-sm utility in component */
 .hero__title {
+  font-family: var(--font-heading, inherit);
   font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 800;
-  line-height: 1.1;
+  font-weight: var(--font-weight-heading, 800);
+  line-height: var(--line-height-heading, 1.1);
   background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 50%, var(--color-accent) 100%);
   background-size: 200% 200%;
   animation: gradientFlow 5s ease infinite;
@@ -1442,6 +1268,7 @@ button {
 
 /* .hero__subtitle uses .fw-semibold .mb-lg utilities in component */
 .hero__subtitle {
+  font-family: var(--font-heading, inherit);
   font-size: clamp(1.5rem, 3vw, 2rem);
   color: var(--color-secondary);
 }
@@ -2530,6 +2357,16 @@ button {
 
 .editor-section__content {
   padding: var(--space-lg);
+}
+
+/* Theme Card */
+.theme-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.theme-card:active {
+  transform: translateY(0);
 }
 
 /* Editor Form Styles */

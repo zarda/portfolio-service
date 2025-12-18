@@ -3,11 +3,13 @@ import { Profile } from './Profile';
 import { SkillCategory } from './SkillCategory';
 import { Project } from './Project';
 import { ContactInfo } from './ContactInfo';
+import { ThemePresetId } from '../../theme/models/Theme';
 
 export interface PortfolioProps {
   version: string;
   createdAt: Date;
   updatedAt: Date;
+  themePresetId?: ThemePresetId;
 }
 
 export class Portfolio extends Entity<PortfolioProps> {
@@ -32,6 +34,10 @@ export class Portfolio extends Entity<PortfolioProps> {
 
   get updatedAt(): Date {
     return this.props.updatedAt;
+  }
+
+  get themePresetId(): ThemePresetId | undefined {
+    return this.props.themePresetId;
   }
 
   get profile(): Profile {
