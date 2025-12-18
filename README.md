@@ -17,7 +17,8 @@ A responsive personal portfolio website built with React, Vite, and deployed to 
 - **Admin Panel** for editing portfolio content (profile, skills, projects, contact)
 - **Version Management** (create, switch, publish versions)
 - **Live Preview** before publishing changes
-- **Seasonal themes** with light/dark mode support
+- **Advanced Theme System** with 12 preset themes, custom theme builder, and seasonal defaults
+- **Light/Dark Mode** with system preference detection
 
 ## Tech Stack
 
@@ -120,6 +121,7 @@ http://localhost:5173/admin
 | **Projects Editor** | Manage projects with drag-and-drop reordering |
 | **Contact Editor** | Edit email, location, and social links |
 | **Version Manager** | Create, switch, and publish portfolio versions |
+| **Theme Editor** | Select preset themes, create custom themes, configure seasonal defaults |
 
 ### Workflow
 
@@ -136,6 +138,57 @@ Currently, all changes are saved to **localStorage**. This means:
 - Clearing browser data will reset to default portfolio
 
 > **Note**: Phase 3 will add Supabase backend for cloud persistence and multi-tenancy.
+
+## Theme System
+
+The portfolio includes an advanced theme system with Strategy and Builder patterns.
+
+### Available Preset Themes
+
+| Theme | Description |
+|-------|-------------|
+| Default | Modern indigo and pink gradient |
+| Spring | Cherry blossoms and fresh greens |
+| Summer | Warm coral and cool teal |
+| Autumn | Amber and warm rust tones |
+| Winter | Ice blue and silver |
+| Professional | Minimal and corporate |
+| Creative | Vibrant purple and pink |
+| Ocean | Deep blues and teals |
+| Forest | Natural greens and earth tones |
+| Sunset | Warm oranges and pinks |
+| Midnight | Deep purples with gold accents |
+| Neon | Vibrant cyberpunk colors |
+
+### Theme URL Parameters
+
+Access specific themes via URL:
+```
+http://localhost:5173/preview/?theme=ocean
+http://localhost:5173/preview/?theme=neon&mode=dark
+http://localhost:5173/preview/?season=summer
+```
+
+The `?season=` parameter uses the configured seasonal theme (customizable in Theme Editor).
+
+### Custom Themes
+
+Create custom themes in the Admin Panel's Theme Editor:
+1. Set primary and accent colors
+2. Choose heading and body fonts
+3. Select light or dark mode
+4. Save and apply your custom theme
+5. Optionally pair light/dark custom themes for mode switching
+
+### Seasonal Theme Defaults
+
+Configure which theme is used for each season:
+- **Spring** (Mar - May)
+- **Summer** (Jun - Aug)
+- **Autumn** (Sep - Nov)
+- **Winter** (Dec - Feb)
+
+When no saved preference exists, the portfolio automatically uses the configured seasonal theme based on the current date.
 
 ## Customization
 
@@ -284,13 +337,26 @@ portfolio/
 │   │       │   ├── SkillsEditor.tsx     # Skills editing
 │   │       │   ├── ProjectsEditor.tsx   # Projects editing
 │   │       │   ├── ContactEditor.tsx    # Contact editing
-│   │       │   └── VersionManager.tsx   # Version management
+│   │       │   ├── VersionManager.tsx   # Version management
+│   │       │   └── ThemeEditor.tsx      # Theme customization
 │   │       ├── hooks/
 │   │       │   └── usePortfolioEditor.ts # Editor state hook
 │   │       ├── services/
 │   │       │   └── PortfolioEditorService.ts # Mutation service
 │   │       └── __tests__/
 │   │           └── PortfolioEditorService.test.ts
+│   │   └── theme/                        # Theme system feature
+│   │       ├── models/
+│   │       │   ├── Theme.ts              # Theme entity
+│   │       │   ├── ColorPalette.ts       # Color palette value object
+│   │       │   └── Typography.ts         # Typography value object
+│   │       ├── services/
+│   │       │   ├── ThemeService.ts       # Theme management (Strategy pattern)
+│   │       │   └── ThemeBuilder.ts       # Custom theme builder (Builder pattern)
+│   │       ├── presets/
+│   │       │   └── index.ts              # 12 preset themes (light/dark variants)
+│   │       └── hooks/
+│   │           └── useTheme.ts           # React hook for theme state
 │   ├── shared/
 │   │   └── animations/
 │   │       └── presets.ts             # Framer Motion presets
@@ -316,7 +382,6 @@ portfolio/
 ├── index.html
 ├── package.json
 ├── tsconfig.json
-├── PLAN.md
 ├── README.md
 └── vite.config.js
 ```
@@ -340,9 +405,25 @@ PortfolioService (facade singleton)
 ├── VersionManager (data access)
 └── ThemeManager (theme/season state)
        ↓
-React Hooks (useTheme)
+React Hooks (useTheme, usePortfolio)
        ↓
 Components (Hero, About, Skills, Projects, Contact)
+
+**Theme System**
+```
+ThemeService (singleton, Strategy pattern)
+├── Manages current theme state
+├── Handles seasonal auto-detection
+├── Persists to localStorage
+└── Notifies subscribers on changes
+       ↓
+ThemeBuilder (Builder pattern)
+├── Creates custom themes
+└── Generates color variants
+       ↓
+useTheme hook
+       ↓
+Components + ThemeEditor
 ```
 
 **Admin Panel (Read/Write)**
