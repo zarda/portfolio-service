@@ -11,9 +11,10 @@ export { Project } from './Project';
 export type { ProjectProps } from './Project';
 
 export { SocialLink } from './SocialLink';
-export type { SocialPlatform } from './SocialLink';
+export type { SocialPlatform, SocialLinkProps } from './SocialLink';
 
 export { ContactInfo } from './ContactInfo';
+export type { ContactInfoProps, ContactField } from './ContactInfo';
 
 export { Portfolio } from './Portfolio';
 export type { PortfolioProps } from './Portfolio';
