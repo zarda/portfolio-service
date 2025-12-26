@@ -28,7 +28,8 @@ A responsive personal portfolio website built with React, Vite, and deployed to 
 - **Animations**: Framer Motion
 - **Hosting**: Firebase Hosting
 - **CI/CD**: GitHub Actions
-- **Testing**: Vitest + React Testing Library
+- **Testing**: Vitest + React Testing Library (244 tests)
+- **Design Patterns**: Strategy, Builder, Singleton, Facade
 
 ## Getting Started
 
@@ -137,7 +138,7 @@ Currently, all changes are saved to **localStorage**. This means:
 - Data is not synced across devices
 - Clearing browser data will reset to default portfolio
 
-> **Note**: Phase 3 will add Supabase backend for cloud persistence and multi-tenancy.
+> **Note**: Phase 4 will add Next.js + RSC migration and Supabase backend for cloud persistence and multi-tenancy.
 
 ## Theme System
 
@@ -355,8 +356,14 @@ portfolio/
 │   │       │   └── ThemeBuilder.ts       # Custom theme builder (Builder pattern)
 │   │       ├── presets/
 │   │       │   └── index.ts              # 12 preset themes (light/dark variants)
-│   │       └── hooks/
-│   │           └── useTheme.ts           # React hook for theme state
+│   │       ├── hooks/
+│   │       │   └── useTheme.ts           # React hook for theme state
+│   │       └── __tests__/                # Theme unit tests (147 tests)
+│   │           ├── ColorPalette.test.ts
+│   │           ├── Typography.test.ts
+│   │           ├── Theme.test.ts
+│   │           ├── ThemeBuilder.test.ts
+│   │           └── ThemeService.test.ts
 │   ├── shared/
 │   │   └── animations/
 │   │       └── presets.ts             # Framer Motion presets
